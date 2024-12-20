@@ -1,12 +1,15 @@
 package com.example.siamobal;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.ViewHolder> {
@@ -32,7 +35,12 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.Vi
 
         // Set action button (Edit)
         holder.buttonEdit.setOnClickListener(v -> {
-            // Logika untuk edit membership
+            Intent intent = new Intent(holder.itemView.getContext(), EditMembershipActivity.class);
+            intent.putExtra("MEMBERSHIP_ID", membership.getId()); // Kirim ID ke EditMembershipActivity
+            intent.putExtra("NAMA", membership.getNama());
+            intent.putExtra("HARGA", membership.getHarga());
+            intent.putExtra("POTONGAN", membership.getPotongan());
+            holder.itemView.getContext().startActivity(intent);
         });
     }
 
@@ -47,7 +55,7 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewNama = itemView.findViewById(R.id.textViewNama);
+            textViewNama = itemView.findViewById(R.id.textViewNamaMembership);
             textViewHarga = itemView.findViewById(R.id.textViewHarga);
             textViewStatus = itemView.findViewById(R.id.textViewStatus);
             buttonEdit = itemView.findViewById(R.id.buttonEdit);

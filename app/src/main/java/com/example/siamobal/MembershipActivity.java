@@ -2,20 +2,24 @@ package com.example.siamobal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,7 @@ public class MembershipActivity extends AppCompatActivity {
     private List<Membership> membershipList;
     private static final String URL_GET_MEMBERSHIPS = "https://kevindinata.my.id/SIALAN/get_memberships.php"; // Ganti dengan URL server Anda
     private static final int ADD_MEMBERSHIP_REQUEST_CODE = 1; // Kode permintaan untuk menambah membership
+    private static final int EDIT_MEMBERSHIP_REQUEST_CODE = 2; // Kode permintaan untuk edit membership
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,9 @@ public class MembershipActivity extends AppCompatActivity {
         if (requestCode == ADD_MEMBERSHIP_REQUEST_CODE && resultCode == RESULT_OK) {
             // Jika kembali dari TambahMembershipActivity, refresh data
             fetchMemberships();
+        } else if (requestCode == EDIT_MEMBERSHIP_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Jika kembali dari EditMembershipActivity, refresh data
+            fetchMemberships();
         }
     }
 
@@ -69,7 +77,12 @@ public class MembershipActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+                            // Log respons JSON
+                            Log.d("MembershipActivity", "Response: " + response.toString());
+
                             for (int i = 0; i < response.length(); i++) {
+                                // Ambil data sesuai dengan kunci yang ada
+                                String id = response.getJSONObject(i).getString("id"); // Ambil ID
                                 String nama = response.getJSONObject(i).getString("nama");
                                 String harga = response.getJSONObject(i).getString("harga");
                                 String potongan = response.getJSONObject(i).getString("potongan");
@@ -78,12 +91,13 @@ public class MembershipActivity extends AppCompatActivity {
                                 // Menentukan status
                                 String statusText = (status == 1) ? "Aktif" : "Non-Aktif";
 
-                                membershipList.add(new Membership(nama, "Rp. " + harga, statusText));
+                                // Tambahkan ke daftar membership
+                                membershipList.add(new Membership(id, nama, "Rp. " + harga, statusText, potongan));
                             }
                             adapter.notifyDataSetChanged(); // Notifikasi adapter untuk memperbarui tampilan
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MembershipActivity.this, "Error parsing data.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MembershipActivity.this, "Error parsing data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
