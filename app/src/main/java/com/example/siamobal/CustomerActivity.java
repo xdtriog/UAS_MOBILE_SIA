@@ -13,7 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -21,7 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -63,12 +65,13 @@ public class CustomerActivity extends AppCompatActivity {
     }
 
     private void fetchCustomers() {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL_GET_CUSTOMERS, null,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_CUSTOMERS,
                 response -> {
                     try {
                         customerList.clear(); // Kosongkan daftar sebelum menambahkan data baru
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject customerObject = response.getJSONObject(i);
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject customerObject = jsonArray.getJSONObject(i);
                             String namaCustomer = customerObject.getString("NAMA_CUSTOMER");
                             String namaMembership = customerObject.getString("NAMA_MEMBERSHIP");
                             String timestampHabis = customerObject.getString("TIMESTAMP_HABIS");
@@ -81,9 +84,16 @@ public class CustomerActivity extends AppCompatActivity {
                         Toast.makeText(CustomerActivity.this, "Gagal memuat data", Toast.LENGTH_SHORT).show();
                     }
                 },
-                error -> Toast.makeText(CustomerActivity.this, "Gagal memuat data", Toast.LENGTH_SHORT).show());
+                error -> Toast.makeText(CustomerActivity.this, "Gagal memuat data", Toast.LENGTH_SHORT).show()) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                // Tambahkan parameter yang diperlukan jika ada
+                return params;
+            }
+        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(stringRequest);
     }
 }
