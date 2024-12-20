@@ -1,4 +1,4 @@
-package com.example.siamobal; // Ganti dengan nama paket Anda
+package com.example.siamobal;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +27,12 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Membership membership = membershipList.get(position);
         holder.textViewNama.setText(membership.getNama());
+        holder.textViewHarga.setText(membership.getHarga());
         holder.textViewStatus.setText(membership.getStatus());
 
-        holder.btnEdit.setOnClickListener(v -> {
-            // Tambahkan logika untuk mengedit membership
+        // Set action button (Edit)
+        holder.buttonEdit.setOnClickListener(v -> {
+            // Logika untuk edit membership
         });
     }
 
@@ -40,14 +42,15 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewNama, textViewStatus;
-        Button btnEdit;
+        TextView textViewNama, textViewHarga, textViewStatus;
+        Button buttonEdit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewNama = itemView.findViewById(R.id.textViewNama);
+            textViewHarga = itemView.findViewById(R.id.textViewHarga);
             textViewStatus = itemView.findViewById(R.id.textViewStatus);
-            btnEdit = itemView.findViewById(R.id.btnEdit);
+            buttonEdit = itemView.findViewById(R.id.buttonEdit);
         }
     }
 }

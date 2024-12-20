@@ -62,11 +62,13 @@ public class MainActivity extends AppCompatActivity {
                                 // Ambil objek user dari JSON
                                 JSONObject userObject = jsonObject.getJSONObject("user");
                                 String nama = userObject.getString("NAMA_KARYAWAN");
+                                String nikKaryawan = userObject.getString("NIK_KARYAWAN"); // Ambil NIK_KARYAWAN
 
-                                // Simpan nama pengguna di SharedPreferences
+                                // Simpan nama dan NIK_KARYAWAN di SharedPreferences
                                 SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("nama", nama);
+                                editor.putString("nik_karyawan", nikKaryawan); // Simpan NIK_KARYAWAN
                                 editor.apply();
 
                                 // Pindah ke DashboardActivity
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(MainActivity.this, "Error parsing response.", Toast.LENGTH_SHORT).show();

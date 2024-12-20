@@ -1,5 +1,6 @@
-package com.example.siamobal; // Ganti dengan nama paket Anda
+package com.example.siamobal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class MembershipActivity extends AppCompatActivity {
     private MembershipAdapter adapter;
     private List<Membership> membershipList;
     private static final String URL_GET_MEMBERSHIPS = "https://kevindinata.my.id/SIALAN/get_memberships.php"; // Ganti dengan URL server Anda
+    private static final int ADD_MEMBERSHIP_REQUEST_CODE = 1; // Kode permintaan untuk menambah membership
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,23 @@ public class MembershipActivity extends AppCompatActivity {
 
         // Tambah Membership
         btnTambahMembership.setOnClickListener(v -> {
-            // Tambahkan logika untuk menambah membership baru
+            // Pindah ke TambahMembershipActivity
+            Intent intent = new Intent(MembershipActivity.this, TambahMembershipActivity.class);
+            startActivityForResult(intent, ADD_MEMBERSHIP_REQUEST_CODE); // Menggunakan startActivityForResult
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_MEMBERSHIP_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Jika kembali dari TambahMembershipActivity, refresh data
+            fetchMemberships();
+        }
+    }
+
     private void fetchMemberships() {
+        membershipList.clear(); // Kosongkan daftar sebelum mengisi ulang
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL_GET_MEMBERSHIPS, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -59,9 +73,12 @@ public class MembershipActivity extends AppCompatActivity {
                                 String nama = response.getJSONObject(i).getString("nama");
                                 String harga = response.getJSONObject(i).getString("harga");
                                 String potongan = response.getJSONObject(i).getString("potongan");
-                                String status = response.getJSONObject(i).getString("status");
+                                int status = response.getJSONObject(i).getInt("status");
 
-                                membershipList.add(new Membership(nama, status + " - " + potongan + " (" + harga + ")"));
+                                // Menentukan status
+                                String statusText = (status == 1) ? "Aktif" : "Non-Aktif";
+
+                                membershipList.add(new Membership(nama, "Rp. " + harga, statusText));
                             }
                             adapter.notifyDataSetChanged(); // Notifikasi adapter untuk memperbarui tampilan
                         } catch (JSONException e) {

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.SIAMOBAL"
         tools:targetApi="31">
         <activity
+            android:name=".TambahMembershipActivity"
+            android:exported="false" />
+        <activity
             android:name=".MembershipActivity"
             android:exported="false" />
         <activity

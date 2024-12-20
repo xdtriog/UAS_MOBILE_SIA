@@ -3,24 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/textViewNama"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Nama Membership"/>
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/textViewHarga"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/textViewStatus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Status"/>
+        android:textSize="16sp"/>
 
     <Button
-        android:id="@+id/btnEdit"
+        android:id="@+id/buttonEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit"/>

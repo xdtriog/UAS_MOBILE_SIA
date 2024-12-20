@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Tambah Membership"
         android:layout_centerHorizontal="true"
+        android:layout_below="@id/textViewTitle"
         android:layout_marginBottom="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tambah Membership"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Membership"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/editTextNamaMembership"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan Nama Membership"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Harga"
+        android:layout_below="@id/editTextNamaMembership"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/editTextHarga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan Harga"
+        android:inputType="number"
+        android:layout_below="@id/editTextNamaMembership"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Potongan (%)"
+        android:layout_below="@id/editTextHarga"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/editTextPotongan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan Potongan (%)"
+        android:inputType="number"
+        android:layout_below="@id/editTextHarga"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"/>
+
+    <Button
+        android:id="@+id/buttonSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambahkan dan Simpan"
+        android:layout_below="@id/editTextPotongan"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:padding="12dp"/>
+</RelativeLayout>
