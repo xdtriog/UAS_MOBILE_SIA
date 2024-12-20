@@ -82,12 +82,6 @@ public class EditMembershipActivity extends AppCompatActivity {
             return;
         }
 
-        // Log untuk memeriksa nilai yang akan dikirim
-        Log.d("EditMembershipActivity", "ID: " + membershipId);
-        Log.d("EditMembershipActivity", "Nama: " + namaMembership);
-        Log.d("EditMembershipActivity", "Harga: " + harga);
-        Log.d("EditMembershipActivity", "Potongan: " + potongan);
-        Log.d("EditMembershipActivity", "Status: " + status);
 
         // Kirim data ke server
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPDATE_MEMBERSHIP,

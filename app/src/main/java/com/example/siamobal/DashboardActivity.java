@@ -48,10 +48,10 @@ public class DashboardActivity extends AppCompatActivity {
 //            startActivity(new Intent(DashboardActivity.this, BeliMembershipActivity.class));
 //        });
 //
-//        btnCustomer.setOnClickListener(v -> {
-//            // Pindah ke Activity Customer
-//            startActivity(new Intent(DashboardActivity.this, CustomerActivity.class));
-//        });
+        btnCustomer.setOnClickListener(v -> {
+            // Pindah ke Activity Customer
+            startActivity(new Intent(DashboardActivity.this, CustomerActivity.class));
+        });
 //
 //        btnPiutang.setOnClickListener(v -> {
 //            // Pindah ke Activity Piutang
