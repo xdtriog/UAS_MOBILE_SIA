@@ -88,9 +88,9 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, MembershipActivity.class));
         });
 
-//        btnBarang.setOnClickListener(v -> {
-//            // Pindah ke Activity Barang
-//            startActivity(new Intent(DashboardActivity.this, BarangActivity.class));
-//        });
+        btnBarang.setOnClickListener(v -> {
+            // Pindah ke Activity Barang
+            startActivity(new Intent(DashboardActivity.this, BarangActivity.class));
+        });
     }
 }
