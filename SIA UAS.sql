@@ -1,0 +1,405 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Dec 24, 2024 at 03:45 PM
+-- Server version: 10.6.15-MariaDB-cll-lve
+-- PHP Version: 8.3.14
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `keve8286_SIALAN`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `BUKU_BESAR`
+--
+
+CREATE TABLE `BUKU_BESAR` (
+  `ID_BB` char(10) NOT NULL,
+  `KODE_AKUN` decimal(4,0) DEFAULT NULL,
+  `REF` char(10) DEFAULT NULL,
+  `DEBIT` char(10) DEFAULT NULL,
+  `KREDIT` char(10) DEFAULT NULL,
+  `SALDO_DEBIT` char(10) DEFAULT NULL,
+  `SALDO_KREDIT` char(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `CUSTOMER`
+--
+
+CREATE TABLE `CUSTOMER` (
+  `NIK_CUTOMER` decimal(16,0) NOT NULL,
+  `NAMA_CUSTOMER` varchar(50) DEFAULT NULL,
+  `EMAIL` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `CUSTOMER`
+--
+
+INSERT INTO `CUSTOMER` (`NIK_CUTOMER`, `NAMA_CUSTOMER`, `EMAIL`) VALUES
+(123, '123', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `DETAIL_NOTA_JUAL`
+--
+
+CREATE TABLE `DETAIL_NOTA_JUAL` (
+  `ID_DETAIL_NOTA_JUAL` varchar(25) NOT NULL,
+  `NOMOR_NOTA` varchar(20) DEFAULT NULL,
+  `KD_BARANG` varchar(10) DEFAULT NULL,
+  `JUMLAH` decimal(5,0) DEFAULT NULL,
+  `TOTAL_HARGA` decimal(25,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `JURNAL_UMUM`
+--
+
+CREATE TABLE `JURNAL_UMUM` (
+  `ID_JURNAL_UMUM` varchar(25) NOT NULL,
+  `KD_DEBIT` decimal(4,0) DEFAULT NULL,
+  `KD_KREDIT` decimal(4,0) DEFAULT NULL,
+  `TANGGAL` date NOT NULL,
+  `REF` varchar(20) DEFAULT NULL,
+  `DEBIT` decimal(25,0) DEFAULT NULL,
+  `KREDIT` decimal(25,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `JURNAL_UMUM`
+--
+
+INSERT INTO `JURNAL_UMUM` (`ID_JURNAL_UMUM`, `KD_DEBIT`, `KD_KREDIT`, `TANGGAL`, `REF`, `DEBIT`, `KREDIT`) VALUES
+('JU1224-DDD43419A77E48DD', 1101, 4201, '2024-12-24', 'TMBP12C2EA8DF16FCBF6', 10000, 10000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `KARYAWAN`
+--
+
+CREATE TABLE `KARYAWAN` (
+  `NIK_KARYAWAN` decimal(16,0) NOT NULL,
+  `NAMA_KARYAWAN` varchar(50) DEFAULT NULL,
+  `EMAIL` varchar(100) DEFAULT NULL,
+  `PASSWORD` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `KARYAWAN`
+--
+
+INSERT INTO `KARYAWAN` (`NIK_KARYAWAN`, `NAMA_KARYAWAN`, `EMAIL`, `PASSWORD`) VALUES
+(1234567890123456, 'Andi Setiawan', 'andi.setiawan@example.com', 'password123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `KODE_AKUN`
+--
+
+CREATE TABLE `KODE_AKUN` (
+  `KODE_AKUN` decimal(4,0) NOT NULL,
+  `NAMA_AKUN` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `KODE_AKUN`
+--
+
+INSERT INTO `KODE_AKUN` (`KODE_AKUN`, `NAMA_AKUN`) VALUES
+(1101, 'Kas'),
+(4101, 'Pendapatan'),
+(4201, 'Pendapatan Lain'),
+(5101, 'Beban Listrik');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `MASTER_BARANG`
+--
+
+CREATE TABLE `MASTER_BARANG` (
+  `KD_BARANG` varchar(10) NOT NULL,
+  `NAMA_BARANG` varchar(100) DEFAULT NULL,
+  `HARGA_BARANG` decimal(25,0) DEFAULT NULL,
+  `STATUS` decimal(1,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `MASTER_MEMBERSHIP`
+--
+
+CREATE TABLE `MASTER_MEMBERSHIP` (
+  `ID_MASTER_MEMBERSHIP` varchar(10) NOT NULL,
+  `NIK_KARYAWAN` decimal(16,0) DEFAULT NULL,
+  `NAMA_MEMBERSHIP` varchar(100) DEFAULT NULL,
+  `HARGA_MEMBERSHIP` decimal(25,0) DEFAULT NULL,
+  `POTONGAN_` decimal(2,0) DEFAULT NULL,
+  `STATUS` decimal(1,0) DEFAULT NULL,
+  `LAST_UPDATED` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `MASTER_MEMBERSHIP`
+--
+
+INSERT INTO `MASTER_MEMBERSHIP` (`ID_MASTER_MEMBERSHIP`, `NIK_KARYAWAN`, `NAMA_MEMBERSHIP`, `HARGA_MEMBERSHIP`, `POTONGAN_`, `STATUS`, `LAST_UPDATED`) VALUES
+('MMBP1A3C85', 1234567890123456, 'GOLD', 10000, 10, 1, '2024-12-24 08:02:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `MASTER_METODE_PEMBAYARAN`
+--
+
+CREATE TABLE `MASTER_METODE_PEMBAYARAN` (
+  `ID_MMPN` varchar(10) NOT NULL,
+  `NAMA_MPPN` varchar(100) DEFAULT NULL,
+  `STATUS` decimal(1,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `NOTA_JUAL`
+--
+
+CREATE TABLE `NOTA_JUAL` (
+  `NOMOR_NOTA` varchar(20) NOT NULL,
+  `NIK_CUTOMER` decimal(16,0) DEFAULT NULL,
+  `NIK_KARYAWAN` decimal(16,0) DEFAULT NULL,
+  `ID_MPP` varchar(10) DEFAULT NULL,
+  `TIMESTAMP` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `GRAND_TOTAL` decimal(25,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PIUTANG_CUSTOMER`
+--
+
+CREATE TABLE `PIUTANG_CUSTOMER` (
+  `ID_PIUTANG_CUSTOMER` varchar(20) NOT NULL,
+  `NOMOR_NOTA` varchar(20) DEFAULT NULL,
+  `MAX_TEMPO` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `CICILAN` decimal(2,0) DEFAULT NULL,
+  `JUMLAH_PIUTANG` decimal(25,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TRANS_CICILAN_PIUTANG`
+--
+
+CREATE TABLE `TRANS_CICILAN_PIUTANG` (
+  `ID_CICILAN_PIUTANG` varchar(25) NOT NULL,
+  `ID_PIUTANG_CUSTOMER` varchar(20) DEFAULT NULL,
+  `JUMLAH_BAYAR` decimal(25,0) DEFAULT NULL,
+  `WAKTU_CICIL` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TRANS_MEMBERSHIP`
+--
+
+CREATE TABLE `TRANS_MEMBERSHIP` (
+  `ID_TRANS_MEMBERSHIP` varchar(20) NOT NULL,
+  `ID_MASTER_MEMBERSHIP` varchar(10) DEFAULT NULL,
+  `NIK_CUTOMER` decimal(16,0) DEFAULT NULL,
+  `NAMA_MEMBERSHIP` varchar(100) DEFAULT NULL,
+  `HARGA_MEMBERSHIP` decimal(25,0) DEFAULT NULL,
+  `POTONGAN_` decimal(2,0) DEFAULT NULL,
+  `TIMESTAMP_HABIS` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `TRANS_MEMBERSHIP`
+--
+
+INSERT INTO `TRANS_MEMBERSHIP` (`ID_TRANS_MEMBERSHIP`, `ID_MASTER_MEMBERSHIP`, `NIK_CUTOMER`, `NAMA_MEMBERSHIP`, `HARGA_MEMBERSHIP`, `POTONGAN_`, `TIMESTAMP_HABIS`) VALUES
+('TMBP12C2EA8DF16FCBF6', 'MMBP1A3C85', 123, 'GOLD', 10000, 10, '2025-01-24 08:14:38');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `BUKU_BESAR`
+--
+ALTER TABLE `BUKU_BESAR`
+  ADD PRIMARY KEY (`ID_BB`),
+  ADD KEY `FK_REFERENCE_24` (`KODE_AKUN`);
+
+--
+-- Indexes for table `CUSTOMER`
+--
+ALTER TABLE `CUSTOMER`
+  ADD PRIMARY KEY (`NIK_CUTOMER`);
+
+--
+-- Indexes for table `DETAIL_NOTA_JUAL`
+--
+ALTER TABLE `DETAIL_NOTA_JUAL`
+  ADD PRIMARY KEY (`ID_DETAIL_NOTA_JUAL`),
+  ADD KEY `FK_REFERENCE_20` (`NOMOR_NOTA`),
+  ADD KEY `FK_REFERENCE_21` (`KD_BARANG`);
+
+--
+-- Indexes for table `JURNAL_UMUM`
+--
+ALTER TABLE `JURNAL_UMUM`
+  ADD PRIMARY KEY (`ID_JURNAL_UMUM`),
+  ADD KEY `FK_REFERENCE_22` (`KD_DEBIT`),
+  ADD KEY `FK_REFERENCE_23` (`KD_KREDIT`);
+
+--
+-- Indexes for table `KARYAWAN`
+--
+ALTER TABLE `KARYAWAN`
+  ADD PRIMARY KEY (`NIK_KARYAWAN`);
+
+--
+-- Indexes for table `KODE_AKUN`
+--
+ALTER TABLE `KODE_AKUN`
+  ADD PRIMARY KEY (`KODE_AKUN`);
+
+--
+-- Indexes for table `MASTER_BARANG`
+--
+ALTER TABLE `MASTER_BARANG`
+  ADD PRIMARY KEY (`KD_BARANG`);
+
+--
+-- Indexes for table `MASTER_MEMBERSHIP`
+--
+ALTER TABLE `MASTER_MEMBERSHIP`
+  ADD PRIMARY KEY (`ID_MASTER_MEMBERSHIP`),
+  ADD KEY `FK_REFERENCE_16` (`NIK_KARYAWAN`);
+
+--
+-- Indexes for table `MASTER_METODE_PEMBAYARAN`
+--
+ALTER TABLE `MASTER_METODE_PEMBAYARAN`
+  ADD PRIMARY KEY (`ID_MMPN`);
+
+--
+-- Indexes for table `NOTA_JUAL`
+--
+ALTER TABLE `NOTA_JUAL`
+  ADD PRIMARY KEY (`NOMOR_NOTA`),
+  ADD KEY `FK_REFERENCE_12` (`NIK_CUTOMER`),
+  ADD KEY `FK_REFERENCE_13` (`NIK_KARYAWAN`),
+  ADD KEY `FK_REFERENCE_14` (`ID_MPP`);
+
+--
+-- Indexes for table `PIUTANG_CUSTOMER`
+--
+ALTER TABLE `PIUTANG_CUSTOMER`
+  ADD PRIMARY KEY (`ID_PIUTANG_CUSTOMER`),
+  ADD KEY `FK_REFERENCE_19` (`NOMOR_NOTA`);
+
+--
+-- Indexes for table `TRANS_CICILAN_PIUTANG`
+--
+ALTER TABLE `TRANS_CICILAN_PIUTANG`
+  ADD PRIMARY KEY (`ID_CICILAN_PIUTANG`),
+  ADD KEY `FK_REFERENCE_15` (`ID_PIUTANG_CUSTOMER`);
+
+--
+-- Indexes for table `TRANS_MEMBERSHIP`
+--
+ALTER TABLE `TRANS_MEMBERSHIP`
+  ADD PRIMARY KEY (`ID_TRANS_MEMBERSHIP`),
+  ADD KEY `FK_REFERENCE_17` (`ID_MASTER_MEMBERSHIP`),
+  ADD KEY `FK_REFERENCE_18` (`NIK_CUTOMER`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `BUKU_BESAR`
+--
+ALTER TABLE `BUKU_BESAR`
+  ADD CONSTRAINT `FK_REFERENCE_24` FOREIGN KEY (`KODE_AKUN`) REFERENCES `KODE_AKUN` (`KODE_AKUN`);
+
+--
+-- Constraints for table `DETAIL_NOTA_JUAL`
+--
+ALTER TABLE `DETAIL_NOTA_JUAL`
+  ADD CONSTRAINT `FK_REFERENCE_20` FOREIGN KEY (`NOMOR_NOTA`) REFERENCES `NOTA_JUAL` (`NOMOR_NOTA`),
+  ADD CONSTRAINT `FK_REFERENCE_21` FOREIGN KEY (`KD_BARANG`) REFERENCES `MASTER_BARANG` (`KD_BARANG`);
+
+--
+-- Constraints for table `JURNAL_UMUM`
+--
+ALTER TABLE `JURNAL_UMUM`
+  ADD CONSTRAINT `FK_REFERENCE_22` FOREIGN KEY (`KD_DEBIT`) REFERENCES `KODE_AKUN` (`KODE_AKUN`),
+  ADD CONSTRAINT `FK_REFERENCE_23` FOREIGN KEY (`KD_KREDIT`) REFERENCES `KODE_AKUN` (`KODE_AKUN`);
+
+--
+-- Constraints for table `MASTER_MEMBERSHIP`
+--
+ALTER TABLE `MASTER_MEMBERSHIP`
+  ADD CONSTRAINT `FK_REFERENCE_16` FOREIGN KEY (`NIK_KARYAWAN`) REFERENCES `KARYAWAN` (`NIK_KARYAWAN`);
+
+--
+-- Constraints for table `NOTA_JUAL`
+--
+ALTER TABLE `NOTA_JUAL`
+  ADD CONSTRAINT `FK_REFERENCE_12` FOREIGN KEY (`NIK_CUTOMER`) REFERENCES `CUSTOMER` (`NIK_CUTOMER`),
+  ADD CONSTRAINT `FK_REFERENCE_13` FOREIGN KEY (`NIK_KARYAWAN`) REFERENCES `KARYAWAN` (`NIK_KARYAWAN`),
+  ADD CONSTRAINT `FK_REFERENCE_14` FOREIGN KEY (`ID_MPP`) REFERENCES `MASTER_METODE_PEMBAYARAN` (`ID_MMPN`);
+
+--
+-- Constraints for table `PIUTANG_CUSTOMER`
+--
+ALTER TABLE `PIUTANG_CUSTOMER`
+  ADD CONSTRAINT `FK_REFERENCE_19` FOREIGN KEY (`NOMOR_NOTA`) REFERENCES `NOTA_JUAL` (`NOMOR_NOTA`);
+
+--
+-- Constraints for table `TRANS_CICILAN_PIUTANG`
+--
+ALTER TABLE `TRANS_CICILAN_PIUTANG`
+  ADD CONSTRAINT `FK_REFERENCE_15` FOREIGN KEY (`ID_PIUTANG_CUSTOMER`) REFERENCES `PIUTANG_CUSTOMER` (`ID_PIUTANG_CUSTOMER`);
+
+--
+-- Constraints for table `TRANS_MEMBERSHIP`
+--
+ALTER TABLE `TRANS_MEMBERSHIP`
+  ADD CONSTRAINT `FK_REFERENCE_17` FOREIGN KEY (`ID_MASTER_MEMBERSHIP`) REFERENCES `MASTER_MEMBERSHIP` (`ID_MASTER_MEMBERSHIP`),
+  ADD CONSTRAINT `FK_REFERENCE_18` FOREIGN KEY (`NIK_CUTOMER`) REFERENCES `CUSTOMER` (`NIK_CUTOMER`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
