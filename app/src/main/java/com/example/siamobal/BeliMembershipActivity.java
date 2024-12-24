@@ -125,7 +125,20 @@ public class BeliMembershipActivity extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_TRANSACTION,
                 response -> {
-                    Toast.makeText(BeliMembershipActivity.this, response, Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        String status = jsonResponse.getString("status");
+
+                        if (status.equals("success")) {
+                            String idJurnalUmum = jsonResponse.getString("id_jurnal_umum");
+                            Toast.makeText(BeliMembershipActivity.this, "Transaksi berhasil disimpan. ID Jurnal: " + idJurnalUmum, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(BeliMembershipActivity.this, "Gagal menyimpan transaksi: " + jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(BeliMembershipActivity.this, "Gagal memuat respons", Toast.LENGTH_SHORT).show();
+                    }
                     finish(); // Kembali ke activity sebelumnya
                 },
                 error -> Toast.makeText(BeliMembershipActivity.this, "Gagal menyimpan transaksi", Toast.LENGTH_SHORT).show()) {
