@@ -15,6 +15,12 @@
         android:theme="@style/Theme.SIAMOBAL"
         tools:targetApi="31">
         <activity
+            android:name=".TambahMetodePembayaranActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MetodePembayaranActivity"
+            android:exported="false" />
+        <activity
             android:name=".TambahKodeAkunActivity"
             android:exported="false" />
         <activity

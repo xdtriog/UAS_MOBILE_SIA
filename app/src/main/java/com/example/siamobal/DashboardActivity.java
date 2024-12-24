@@ -72,12 +72,12 @@ public class DashboardActivity extends AppCompatActivity {
             // Pindah ke Activity Kode Akun
             startActivity(new Intent(DashboardActivity.this, KodeAkunActivity.class));
         });
-//
-//        btnMetodePembayaran.setOnClickListener(v -> {
-//            // Pindah ke Activity Metode Pembayaran
-//            startActivity(new Intent(DashboardActivity.this, MetodePembayaranActivity.class));
-//        });
-//
+
+        btnMetodePembayaran.setOnClickListener(v -> {
+            // Pindah ke Activity Metode Pembayaran
+            startActivity(new Intent(DashboardActivity.this, MetodePembayaranActivity.class));
+        });
+
 //        btnKaryawan.setOnClickListener(v -> {
 //            // Pindah ke Activity Karyawan
 //            startActivity(new Intent(DashboardActivity.this, KaryawanActivity.class));
