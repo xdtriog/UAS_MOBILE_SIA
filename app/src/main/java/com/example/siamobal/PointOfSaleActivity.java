@@ -3,8 +3,10 @@ package com.example.siamobal;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -23,14 +25,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PointOfSaleActivity extends AppCompatActivity {
     private TableLayout tableLayout;
     private EditText editTextTotal;
+    private EditText editTextPotongan;
+    private EditText editTextGrandTotal;
     private Button buttonSimpan;
+    private Spinner spinnerCustomer;
     private static final String URL_GET_DATA = "https://kevindinata.my.id/SIALAN/get_barang_pos.php";
+    private static final String URL_GET_CUSTOMERS = "https://kevindinata.my.id/SIALAN/get_customers_pos.php"; // URL untuk mendapatkan customer
+    private static final String URL_GET_DISCOUNT = "https://kevindinata.my.id/SIALAN/get_discount_pos.php"; // URL untuk mendapatkan potongan
     private static final String URL_SAVE_RECEIPT = "https://kevindinata.my.id/SIALAN/save_receipt.php";
 
     @Override
@@ -40,9 +48,13 @@ public class PointOfSaleActivity extends AppCompatActivity {
 
         tableLayout = findViewById(R.id.tableLayout);
         editTextTotal = findViewById(R.id.editTextTotal);
+        editTextPotongan = findViewById(R.id.editTextPotongan);
+        editTextGrandTotal = findViewById(R.id.editTextGrandTotal);
         buttonSimpan = findViewById(R.id.buttonSimpan);
+        spinnerCustomer = findViewById(R.id.spinnerCustomer);
 
         loadBarang();
+        loadCustomers(); // Load customers when the activity starts
 
         buttonSimpan.setOnClickListener(v -> saveReceipt());
     }
@@ -89,15 +101,13 @@ public class PointOfSaleActivity extends AppCompatActivity {
                                 calculateTotal();
                             });
 
-                            // Tambahkan semua TextView ke dalam TableRow, tanpa menyertakan KD_BARANG
                             tableRow.addView(textViewNama);
                             tableRow.addView(textViewHarga);
                             tableRow.addView(buttonMinus);
                             tableRow.addView(textViewJumlah);
                             tableRow.addView(buttonPlus);
                             tableLayout.addView(tableRow);
-                            // Simpan KD_BARANG ke dalam tag baris
-                            tableRow.setTag(kdBarang); // Kita gunakan setTag untuk menyimpan KD_BARANG
+                            tableRow.setTag(kdBarang);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -110,12 +120,41 @@ public class PointOfSaleActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void loadCustomers() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_CUSTOMERS,
+                response -> {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        ArrayList<String> customerList = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject customerObject = jsonArray.getJSONObject(i);
+                            String nikCustomer = customerObject.getString("NIK_CUTOMER");
+                            String namaCustomer = customerObject.getString("NAMA_CUSTOMER");
+                            customerList.add(nikCustomer + " - " + namaCustomer);
+                        }
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                                android.R.layout.simple_spinner_item, customerList);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerCustomer.setAdapter(adapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(PointOfSaleActivity.this, "Gagal memuat customer", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(PointOfSaleActivity.this, "Gagal memuat customer", Toast.LENGTH_SHORT).show());
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     private void calculateTotal() {
         double total = 0;
         for (int i = 1; i < tableLayout.getChildCount(); i++) {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
-            TextView textViewHarga = (TextView) row.getChildAt(1); // Indeks harga
-            TextView textViewJumlah = (TextView) row.getChildAt(3); // Indeks jumlah
+            TextView textViewHarga = (TextView) row.getChildAt(1);
+            TextView textViewJumlah = (TextView) row.getChildAt(3);
 
             if (textViewHarga != null && textViewJumlah != null) {
                 String hargaString = textViewHarga.getText().toString().replace("Rp. ", "").replace(".", "").trim();
@@ -127,11 +166,48 @@ public class PointOfSaleActivity extends AppCompatActivity {
             }
         }
         editTextTotal.setText("Rp. " + String.format("%,d", (int) total));
+        calculateDiscount(total); // Hitung potongan setelah total
+    }
+
+    private void calculateDiscount(double total) {
+        // Ambil NIK_CUSTOMER yang dipilih dari spinner
+        String selectedCustomer = spinnerCustomer.getSelectedItem().toString();
+        String nikCustomer = selectedCustomer.split(" - ")[0]; // Ambil NIK_CUTOMER
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_DISCOUNT,
+                response -> {
+                    try {
+                        JSONObject discountObject = new JSONObject(response);
+                        double potonganPersen = discountObject.getDouble("POTONGAN_"); // Ambil potongan persen
+                        double potongan = total * (potonganPersen / 100);
+                        double grandTotal = total - potongan;
+
+                        editTextPotongan.setText("Rp. " + String.format("%,d", (int) potongan));
+                        editTextGrandTotal.setText("Rp. " + String.format("%,d", (int) grandTotal));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(PointOfSaleActivity.this, "Gagal menghitung potongan", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(PointOfSaleActivity.this, "Gagal mendapatkan diskon", Toast.LENGTH_SHORT).show()) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("NIK_CUTOMER", nikCustomer); // Kirim NIK_CUTOMER untuk mendapatkan potongan
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void saveReceipt() {
         SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         String nikKaryawan = sharedPreferences.getString("nik_karyawan", "");
+        // Ambil NIK_CUSTOMER yang dipilih dari spinner
+        String selectedCustomer = spinnerCustomer.getSelectedItem().toString();
+        String nikCustomer = selectedCustomer.split(" - ")[0];
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_RECEIPT,
                 response -> Toast.makeText(PointOfSaleActivity.this, response, Toast.LENGTH_SHORT).show(),
@@ -139,27 +215,25 @@ public class PointOfSaleActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("NIK_KARYAWAN", nikKaryawan); // Hanya NIK_KARYAWAN yang dikirim ke PHP
-                params.put("GRAND_TOTAL", String.valueOf(calculateFinalTotal())); // Hanya nilai total sebagai integer
+                params.put("NIK_KARYAWAN", nikKaryawan);
+                params.put("NIK_CUSTOMER", nikCustomer);
+                params.put("GRAND_TOTAL", String.valueOf(calculateFinalTotal()));
 
                 // Kumpulan detail nota jual
                 try {
                     JSONArray detailArray = new JSONArray();
                     for (int i = 1; i < tableLayout.getChildCount(); i++) {
                         TableRow row = (TableRow) tableLayout.getChildAt(i);
+                        String kdBarang = (String) row.getTag();
+                        String jumlahBeli = ((TextView) row.getChildAt(3)).getText().toString();
 
-                        // Ambil KD_BARANG dari tag baris
-                        String kdBarang = (String) row.getTag(); // Ambil nilai KD_BARANG dari setTag
-                        String jumlahBeli = ((TextView) row.getChildAt(3)).getText().toString(); // Ambil jumlah dari TextView
-
-                        // Tambahkan detail ke array
                         JSONObject detailObject = new JSONObject();
-                        detailObject.put("KD_BARANG", kdBarang); // Set KD_BARANG
-                        detailObject.put("JUMLAH", jumlahBeli); // Set JUMLAH
+                        detailObject.put("KD_BARANG", kdBarang);
+                        detailObject.put("JUMLAH", jumlahBeli);
 
                         detailArray.put(detailObject);
                     }
-                    params.put("DETAIL_NOTA_JUAL", detailArray.toString()); // Tambahkan kumpulan detail
+                    params.put("DETAIL_NOTA_JUAL", detailArray.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -173,7 +247,7 @@ public class PointOfSaleActivity extends AppCompatActivity {
     }
 
     private int calculateFinalTotal() {
-        String totalString = editTextTotal.getText().toString().replace("Rp. ", "").replace(".", "").trim();
+        String totalString = editTextGrandTotal.getText().toString().replace("Rp. ", "").replace(".", "").trim();
         return Integer.parseInt(totalString);
     }
 }

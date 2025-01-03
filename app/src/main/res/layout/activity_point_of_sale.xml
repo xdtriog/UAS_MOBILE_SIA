@@ -46,6 +46,12 @@
         <!-- Data akan ditambahkan di sini programmatically -->
     </TableLayout>
 
+    <Spinner
+        android:id="@+id/spinnerCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +60,36 @@
 
     <EditText
         android:id="@+id/editTextTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rp. (disabled)"
+        android:focusable="false"
+        android:text="Rp. 0"
+        android:inputType="none"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Potongan"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextPotongan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rp. (disabled)"
+        android:focusable="false"
+        android:text="Rp. 0"
+        android:inputType="none"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grand Total"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextGrandTotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Rp. (disabled)"
