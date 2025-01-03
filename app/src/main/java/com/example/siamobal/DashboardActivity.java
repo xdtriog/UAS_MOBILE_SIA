@@ -38,11 +38,11 @@ public class DashboardActivity extends AppCompatActivity {
         Button btnBarang = findViewById(R.id.btnBarang);
 
         // Set OnClickListener untuk setiap tombol
-//        btnPointOfSale.setOnClickListener(v -> {
-//            // Pindah ke Activity Point Of Sale
-//            startActivity(new Intent(DashboardActivity.this, PointOfSaleActivity.class));
-//        });
-//
+        btnPointOfSale.setOnClickListener(v -> {
+            // Pindah ke Activity Point Of Sale
+            startActivity(new Intent(DashboardActivity.this, PointOfSaleActivity.class));
+        });
+
         btnBeliMembership.setOnClickListener(v -> {
             // Pindah ke Activity Beli Membership
             startActivity(new Intent(DashboardActivity.this, BeliMembershipActivity.class));
