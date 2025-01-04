@@ -52,6 +52,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"/>
 
+    <Spinner
+        android:id="@+id/spinnerMetodePembayaran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DP"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextDP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rp."
+        android:focusable="false"
+        android:inputType="none"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

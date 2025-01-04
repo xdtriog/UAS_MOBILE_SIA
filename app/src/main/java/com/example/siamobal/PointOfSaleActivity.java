@@ -3,6 +3,7 @@ package com.example.siamobal;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,11 +35,14 @@ public class PointOfSaleActivity extends AppCompatActivity {
     private EditText editTextTotal;
     private EditText editTextPotongan;
     private EditText editTextGrandTotal;
+    private EditText editTextDP; // Field DP
     private Button buttonSimpan;
     private Spinner spinnerCustomer;
+    private Spinner spinnerMetodePembayaran; // Dropdown metode pembayaran
     private static final String URL_GET_DATA = "https://kevindinata.my.id/SIALAN/get_barang_pos.php";
-    private static final String URL_GET_CUSTOMERS = "https://kevindinata.my.id/SIALAN/get_customers_pos.php"; // URL untuk mendapatkan customer
-    private static final String URL_GET_DISCOUNT = "https://kevindinata.my.id/SIALAN/get_discount_pos.php"; // URL untuk mendapatkan potongan
+    private static final String URL_GET_CUSTOMERS = "https://kevindinata.my.id/SIALAN/get_customers_pos.php"; // URL untuk pelanggan
+    private static final String URL_GET_DISCOUNT = "https://kevindinata.my.id/SIALAN/get_discount_pos.php";
+    private static final String URL_GET_PAYMENT_METHODS = "https://kevindinata.my.id/SIALAN/get_metode_pembayaran_pos.php"; // URL untuk metode pembayaran
     private static final String URL_SAVE_RECEIPT = "https://kevindinata.my.id/SIALAN/save_receipt.php";
 
     @Override
@@ -50,11 +54,39 @@ public class PointOfSaleActivity extends AppCompatActivity {
         editTextTotal = findViewById(R.id.editTextTotal);
         editTextPotongan = findViewById(R.id.editTextPotongan);
         editTextGrandTotal = findViewById(R.id.editTextGrandTotal);
+        editTextDP = findViewById(R.id.editTextDP);
         buttonSimpan = findViewById(R.id.buttonSimpan);
         spinnerCustomer = findViewById(R.id.spinnerCustomer);
+        spinnerMetodePembayaran = findViewById(R.id.spinnerMetodePembayaran); // Inisialisasi spinner metode pembayaran
 
         loadBarang();
-        loadCustomers(); // Load customers when the activity starts
+        loadCustomers();
+        loadPaymentMethods(); // Load metode pembayaran saat activity dimulai
+
+        spinnerMetodePembayaran.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMethod = (String) spinnerMetodePembayaran.getSelectedItem();
+                if (selectedMethod != null) {
+                    if (selectedMethod.startsWith("Hutang")) {
+                        editTextDP.setEnabled(true);
+                        editTextDP.setFocusable(true);
+                        editTextDP.setFocusableInTouchMode(true); // Tambahkan ini untuk memungkinkan editing
+                        editTextDP.requestFocus(); // Set fokus pada field DP
+                    } else {
+                        editTextDP.setEnabled(false);
+                        editTextDP.setFocusable(false);
+                        editTextDP.setFocusableInTouchMode(false); // Kendalikan editable mode
+                        editTextDP.setText("");
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Optional: Handle case when nothing is selected if necessary
+            }
+        });
 
         buttonSimpan.setOnClickListener(v -> saveReceipt());
     }
@@ -149,6 +181,35 @@ public class PointOfSaleActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void loadPaymentMethods() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PAYMENT_METHODS,
+                response -> {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        ArrayList<String> paymentMethodList = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject paymentMethodObject = jsonArray.getJSONObject(i);
+                            String idMmpn = paymentMethodObject.getString("ID_MMPN");
+                            String namaMppn = paymentMethodObject.getString("NAMA_MPPN");
+                            paymentMethodList.add(namaMppn + " - " + idMmpn);
+                        }
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                                android.R.layout.simple_spinner_item, paymentMethodList);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerMetodePembayaran.setAdapter(adapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(PointOfSaleActivity.this, "Gagal memuat metode pembayaran", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> Toast.makeText(PointOfSaleActivity.this, "Gagal memuat metode pembayaran", Toast.LENGTH_SHORT).show());
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     private void calculateTotal() {
         double total = 0;
         for (int i = 1; i < tableLayout.getChildCount(); i++) {
@@ -166,19 +227,18 @@ public class PointOfSaleActivity extends AppCompatActivity {
             }
         }
         editTextTotal.setText("Rp. " + String.format("%,d", (int) total));
-        calculateDiscount(total); // Hitung potongan setelah total
+        calculateDiscount(total);
     }
 
     private void calculateDiscount(double total) {
-        // Ambil NIK_CUSTOMER yang dipilih dari spinner
         String selectedCustomer = spinnerCustomer.getSelectedItem().toString();
-        String nikCustomer = selectedCustomer.split(" - ")[0]; // Ambil NIK_CUTOMER
+        String nikCustomer = selectedCustomer.split(" - ")[0];
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_DISCOUNT,
                 response -> {
                     try {
                         JSONObject discountObject = new JSONObject(response);
-                        double potonganPersen = discountObject.getDouble("POTONGAN_"); // Ambil potongan persen
+                        double potonganPersen = discountObject.getDouble("POTONGAN_");
                         double potongan = total * (potonganPersen / 100);
                         double grandTotal = total - potongan;
 
@@ -193,7 +253,7 @@ public class PointOfSaleActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("NIK_CUTOMER", nikCustomer); // Kirim NIK_CUTOMER untuk mendapatkan potongan
+                params.put("NIK_CUTOMER", nikCustomer);
                 return params;
             }
         };
@@ -205,9 +265,16 @@ public class PointOfSaleActivity extends AppCompatActivity {
     private void saveReceipt() {
         SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         String nikKaryawan = sharedPreferences.getString("nik_karyawan", "");
-        // Ambil NIK_CUSTOMER yang dipilih dari spinner
+
+        // Ambil customer yang dipilih
         String selectedCustomer = spinnerCustomer.getSelectedItem().toString();
         String nikCustomer = selectedCustomer.split(" - ")[0];
+
+        // Ambil metode pembayaran yang terpilih
+        String selectedPaymentMethod = spinnerMetodePembayaran.getSelectedItem().toString();
+        String idMmpn = selectedPaymentMethod.split(" - ")[1]; // Ambil ID_MMPN
+
+        String dp = editTextDP.getText().toString().replace("Rp. ", "").replace(".", "").trim(); // Ambil DP dari EditText
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_RECEIPT,
                 response -> Toast.makeText(PointOfSaleActivity.this, response, Toast.LENGTH_SHORT).show(),
@@ -217,9 +284,10 @@ public class PointOfSaleActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("NIK_KARYAWAN", nikKaryawan);
                 params.put("NIK_CUSTOMER", nikCustomer);
+                params.put("ID_MMPN", idMmpn); // Send ID_MMPN for the payment method
                 params.put("GRAND_TOTAL", String.valueOf(calculateFinalTotal()));
+                params.put("DP", dp); // Tambahkan DP ke dalam parameters
 
-                // Kumpulan detail nota jual
                 try {
                     JSONArray detailArray = new JSONArray();
                     for (int i = 1; i < tableLayout.getChildCount(); i++) {
@@ -227,11 +295,12 @@ public class PointOfSaleActivity extends AppCompatActivity {
                         String kdBarang = (String) row.getTag();
                         String jumlahBeli = ((TextView) row.getChildAt(3)).getText().toString();
 
-                        JSONObject detailObject = new JSONObject();
-                        detailObject.put("KD_BARANG", kdBarang);
-                        detailObject.put("JUMLAH", jumlahBeli);
-
-                        detailArray.put(detailObject);
+                        if (!jumlahBeli.equals("0")) { // Hanya ambil barang dengan jumlah lebih dari 0
+                            JSONObject detailObject = new JSONObject();
+                            detailObject.put("KD_BARANG", kdBarang);
+                            detailObject.put("JUMLAH", jumlahBeli);
+                            detailArray.put(detailObject);
+                        }
                     }
                     params.put("DETAIL_NOTA_JUAL", detailArray.toString());
                 } catch (JSONException e) {
