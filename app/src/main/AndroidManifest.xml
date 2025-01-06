@@ -15,6 +15,9 @@
         android:theme="@style/Theme.SIAMOBAL"
         tools:targetApi="31">
         <activity
+            android:name=".JurnalUmumActivity"
+            android:exported="false" />
+        <activity
             android:name=".BarangAdapter"
             android:exported="false" />
         <activity

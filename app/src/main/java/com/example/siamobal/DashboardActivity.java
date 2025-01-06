@@ -57,12 +57,12 @@ public class DashboardActivity extends AppCompatActivity {
 //            // Pindah ke Activity Piutang
 //            startActivity(new Intent(DashboardActivity.this, PiutangActivity.class));
 //        });
-//
-//        btnJurnalUmum.setOnClickListener(v -> {
-//            // Pindah ke Activity Jurnal Umum
-//            startActivity(new Intent(DashboardActivity.this, JurnalUmumActivity.class));
-//        });
-//
+
+        btnJurnalUmum.setOnClickListener(v -> {
+            // Pindah ke Activity Jurnal Umum
+            startActivity(new Intent(DashboardActivity.this, JurnalUmumActivity.class));
+        });
+
 //        btnBukuBesar.setOnClickListener(v -> {
 //            // Pindah ke Activity Buku Besar
 //            startActivity(new Intent(DashboardActivity.this, BukuBesarActivity.class));
