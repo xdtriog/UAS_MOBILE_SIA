@@ -15,6 +15,15 @@
         android:theme="@style/Theme.SIAMOBAL"
         tools:targetApi="31">
         <activity
+            android:name=".EditKaryawanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TambahKaryawanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KaryawanActivity"
+            android:exported="false" />
+        <activity
             android:name=".JurnalUmumActivity"
             android:exported="false" />
         <activity

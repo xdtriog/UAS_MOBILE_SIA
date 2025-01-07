@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Karyawan"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp" />
+
+    <Button
+        android:id="@+id/btn_tambah_karyawan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tambah Karyawan"
+        android:layout_gravity="center" /> <!-- Tombol di-center -->
+
+    <TableLayout
+        android:id="@+id/table_karyawan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1,2"> <!-- Memperluas kolom sesuai ukuran header -->
+
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="NIK Karyawan"
+                android:padding="8dp"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="Nama Karyawan"
+                android:padding="8dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:padding="8dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Action"
+                android:padding="8dp"
+                android:gravity="center" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

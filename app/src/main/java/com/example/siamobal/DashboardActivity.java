@@ -47,7 +47,7 @@ public class DashboardActivity extends AppCompatActivity {
             // Pindah ke Activity Beli Membership
             startActivity(new Intent(DashboardActivity.this, BeliMembershipActivity.class));
         });
-//
+
         btnCustomer.setOnClickListener(v -> {
             // Pindah ke Activity Customer
             startActivity(new Intent(DashboardActivity.this, CustomerActivity.class));
@@ -78,10 +78,10 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, MetodePembayaranActivity.class));
         });
 
-//        btnKaryawan.setOnClickListener(v -> {
-//            // Pindah ke Activity Karyawan
-//            startActivity(new Intent(DashboardActivity.this, KaryawanActivity.class));
-//        });
+        btnKaryawan.setOnClickListener(v -> {
+            // Pindah ke Activity Karyawan
+            startActivity(new Intent(DashboardActivity.this, KaryawanActivity.class));
+        });
 
         btnMembership.setOnClickListener(v -> {
             // Pindah ke Activity Membership
