@@ -75,6 +75,13 @@
             android:text="Buku Besar"/>
 
         <Button
+            android:id="@+id/btnNeracaSaldo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="Neraca Saldo"/>
+
+        <Button
             android:id="@+id/btnKodeAkun"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

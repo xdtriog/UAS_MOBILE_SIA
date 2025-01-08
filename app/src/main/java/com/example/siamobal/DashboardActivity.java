@@ -31,6 +31,7 @@ public class DashboardActivity extends AppCompatActivity {
         Button btnPiutang = findViewById(R.id.btnPiutang);
         Button btnJurnalUmum = findViewById(R.id.btnJurnalUmum);
         Button btnBukuBesar = findViewById(R.id.btnBukuBesar);
+        Button btnNeracaSaldo = findViewById(R.id.btnNeracaSaldo);
         Button btnKodeAkun = findViewById(R.id.btnKodeAkun);
         Button btnMetodePembayaran = findViewById(R.id.btnMetodePembayaran);
         Button btnKaryawan = findViewById(R.id.btnKaryawan);
@@ -63,11 +64,16 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, JurnalUmumActivity.class));
         });
 
-//        btnBukuBesar.setOnClickListener(v -> {
-//            // Pindah ke Activity Buku Besar
-//            startActivity(new Intent(DashboardActivity.this, BukuBesarActivity.class));
-//        });
-//
+        btnBukuBesar.setOnClickListener(v -> {
+            // Pindah ke Activity Buku Besar
+            startActivity(new Intent(DashboardActivity.this, BukuBesarActivity.class));
+        });
+
+        btnNeracaSaldo.setOnClickListener(v -> {
+            // Pindah ke Activity Buku Besar
+            startActivity(new Intent(DashboardActivity.this, NeracaSaldoActivity.class));
+        });
+
         btnKodeAkun.setOnClickListener(v -> {
             // Pindah ke Activity Kode Akun
             startActivity(new Intent(DashboardActivity.this, KodeAkunActivity.class));

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Neraca Saldo"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp" />
+
+    <Spinner
+        android:id="@+id/spinnerBulanTahun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
+
+    <TableLayout
+        android:id="@+id/tableBukuBesar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1,2,3">
+
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Kode Akun"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:text="Keterangan"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Debit"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Kredit"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <!-- Data rows will be added programmatically -->
+    </TableLayout>
+
+</LinearLayout>
