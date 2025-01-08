@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cicil Piutang Customer"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp" />
+
+    <EditText
+        android:id="@+id/etIdPiutangCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ID Piutang Customer"
+        android:focusable="false" />
+
+    <EditText
+        android:id="@+id/etNomorNota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nomor Nota"
+        android:focusable="false" />
+
+    <EditText
+        android:id="@+id/etNamaCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Customer"
+        android:focusable="false" />
+
+    <EditText
+        android:id="@+id/etJumlahPiutang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Jumlah Piutang"
+        android:focusable="false" />
+
+    <EditText
+        android:id="@+id/etJumlahCicil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Jumlah Cicil"
+        android:inputType="number"
+        android:importantForAccessibility="yes" />
+
+    <EditText
+        android:id="@+id/etSisaPiutang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sisa Piutang"
+        android:focusable="false"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cicil dan Simpan" />
+
+</LinearLayout>

@@ -15,6 +15,12 @@
         android:theme="@style/Theme.SIAMOBAL"
         tools:targetApi="31">
         <activity
+            android:name=".CicilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PiutangActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditKaryawanActivity"
             android:exported="false" />
         <activity
