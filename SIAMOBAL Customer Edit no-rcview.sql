@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 08, 2025 at 12:01 PM
+-- Generation Time: Jan 08, 2025 at 02:16 PM
 -- Server version: 10.6.15-MariaDB-cll-lve
 -- PHP Version: 8.3.14
 
@@ -24,22 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `BUKU_BESAR`
---
-
-CREATE TABLE `BUKU_BESAR` (
-  `ID_BB` char(10) NOT NULL,
-  `KODE_AKUN` decimal(4,0) DEFAULT NULL,
-  `REF` char(10) DEFAULT NULL,
-  `DEBIT` char(10) DEFAULT NULL,
-  `KREDIT` char(10) DEFAULT NULL,
-  `SALDO_DEBIT` char(10) DEFAULT NULL,
-  `SALDO_KREDIT` char(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `CUSTOMER`
 --
 
@@ -55,7 +39,8 @@ CREATE TABLE `CUSTOMER` (
 
 INSERT INTO `CUSTOMER` (`NIK_CUTOMER`, `NAMA_CUSTOMER`, `EMAIL`) VALUES
 (123, 'Satu Dua Tiga', '123@123.com'),
-(998, 'yogi', 'jjjj@gmail.com');
+(998, 'yogi1', 'yogi@gmail.com'),
+(48738, 'yongki', 'yongki@yongki.com');
 
 -- --------------------------------------------------------
 
@@ -325,13 +310,6 @@ INSERT INTO `TRANS_MEMBERSHIP` (`ID_TRANS_MEMBERSHIP`, `ID_MASTER_MEMBERSHIP`, `
 --
 
 --
--- Indexes for table `BUKU_BESAR`
---
-ALTER TABLE `BUKU_BESAR`
-  ADD PRIMARY KEY (`ID_BB`),
-  ADD KEY `FK_REFERENCE_24` (`KODE_AKUN`);
-
---
 -- Indexes for table `CUSTOMER`
 --
 ALTER TABLE `CUSTOMER`
@@ -420,12 +398,6 @@ ALTER TABLE `TRANS_MEMBERSHIP`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `BUKU_BESAR`
---
-ALTER TABLE `BUKU_BESAR`
-  ADD CONSTRAINT `FK_REFERENCE_24` FOREIGN KEY (`KODE_AKUN`) REFERENCES `KODE_AKUN` (`KODE_AKUN`);
 
 --
 -- Constraints for table `DETAIL_NOTA_JUAL`
