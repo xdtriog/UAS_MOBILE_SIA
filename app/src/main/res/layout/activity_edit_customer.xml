@@ -1,61 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
         android:text="Edit Customer"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="center"
-        android:paddingBottom="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textViewNik"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NIK_CUTOMER"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="32dp"
+        android:text="NIK CUSTOMER"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
 
     <EditText
         android:id="@+id/et_nik_customer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="NIK_CUTOMER"
-        android:inputType="none"/>
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edittext"
+        android:focusable="false"
+        android:hint="NIK CUSTOMER"
+        android:paddingLeft="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewNik" />
 
     <TextView
+        android:id="@+id/textViewNamaCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Nama Customer"
-        android:layout_marginTop="8dp"/>
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_nik_customer" />
 
     <EditText
         android:id="@+id/et_nama_customer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nama Customer"/>
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Nama Customer"
+        android:paddingLeft="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewNamaCustomer" />
 
     <TextView
+        android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Email"
-        android:layout_marginTop="8dp"/>
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_nama_customer" />
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edittext"
         android:hint="Email"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:paddingLeft="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewEmail" />
 
     <Button
         android:id="@+id/btn_simpan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/dark_green"
         android:text="Edit dan Simpan"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        tools:layout_editor_absoluteX="16dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

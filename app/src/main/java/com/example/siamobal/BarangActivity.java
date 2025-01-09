@@ -26,6 +26,8 @@ public class BarangActivity extends AppCompatActivity {
     private TableLayout tableLayout;
     private Button buttonTambahBarang;
     private static final String URL_GET_DATA = "https://kevindinata.my.id/SIALAN/get_barang.php"; // Ganti dengan URL server Anda
+    private static final int ADD_BARANG_REQUEST_CODE = 1; // Kode permintaan untuk tambah barang
+    private static final int EDIT_BARANG_REQUEST_CODE = 2; // Kode permintaan untuk edit barang
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class BarangActivity extends AppCompatActivity {
         // Listener untuk tombol tambah barang
         buttonTambahBarang.setOnClickListener(v -> {
             Intent intent = new Intent(BarangActivity.this, TambahBarangActivity.class);
-            startActivity(intent); // Memulai aktivitas TambahBarangActivity
+            startActivityForResult(intent, ADD_BARANG_REQUEST_CODE); // Memulai aktivitas dengan request code
         });
     }
 
@@ -65,17 +67,27 @@ public class BarangActivity extends AppCompatActivity {
                             TextView textViewNama = new TextView(BarangActivity.this);
                             TextView textViewHarga = new TextView(BarangActivity.this);
                             TextView textViewStatus = new TextView(BarangActivity.this);
-                            TextView textViewAction = new TextView(BarangActivity.this);
+                            Button buttonEdit = new Button(BarangActivity.this); // Ubah menjadi Button
 
                             textViewNama.setText(namaBarang);
                             textViewHarga.setText("Rp. " + hargaBarang);
                             textViewStatus.setText(status.equals("1") ? "Aktif" : "Tidak Aktif");
-                            textViewAction.setText("Edit"); // Placeholder untuk aksi edit
+                            buttonEdit.setText("Edit"); // Set teks tombol Edit
+
+                            // Set click listener untuk tombol Edit
+                            buttonEdit.setOnClickListener(v -> {
+                                Intent intent = new Intent(BarangActivity.this, EditBarangActivity.class);
+                                intent.putExtra("KD_BARANG", kdBarang);
+                                intent.putExtra("NAMA_BARANG", namaBarang);
+                                intent.putExtra("HARGA_BARANG", hargaBarang);
+                                intent.putExtra("STATUS", status); // Kirim status langsung dari JSON (1 atau 0)
+                                startActivityForResult(intent, EDIT_BARANG_REQUEST_CODE); // Kembali untuk memuat ulang
+                            });
 
                             tableRow.addView(textViewNama);
                             tableRow.addView(textViewHarga);
                             tableRow.addView(textViewStatus);
-                            tableRow.addView(textViewAction);
+                            tableRow.addView(buttonEdit); // Menambahkan tombol Edit ke tabel
                             tableLayout.addView(tableRow);
                         }
                     } catch (JSONException e) {
@@ -87,5 +99,14 @@ public class BarangActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            // Jika kembali dari TambahBarangActivity atau EditBarangActivity, refresh data
+            loadBarang();
+        }
     }
 }

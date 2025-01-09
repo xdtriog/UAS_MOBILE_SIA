@@ -1,47 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tambah Barang"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nama Barang"
-        android:layout_marginTop="16dp"/>
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <EditText
         android:id="@+id/editTextNamaBarang"
+        android:paddingLeft="10sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Masukkan Nama Barang"/>
+        android:layout_marginTop="4dp"
+        android:layout_height="50sp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Masukkan Nama Barang"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNamaBarang" />
 
     <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Harga Barang"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="176dp"
+        android:text="Tambah Barang"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewNamaBarang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Nama Barang"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <EditText
         android:id="@+id/editTextHargaBarang"
+        android:paddingLeft="10sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_edittext"
         android:hint="Masukkan Harga Barang"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHargaBarang" />
 
     <Button
         android:id="@+id/buttonSimpan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Tambah dan Simpan"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHargaBarang" />
+
+    <TextView
+        android:id="@+id/textViewHargaBarang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Harga Barang"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNamaBarang" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

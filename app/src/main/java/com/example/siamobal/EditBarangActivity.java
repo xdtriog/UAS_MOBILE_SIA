@@ -2,7 +2,6 @@ package com.example.siamobal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -20,59 +19,55 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditMembershipActivity extends AppCompatActivity {
-    private EditText editTextIdMembership, editTextNamaMembership, editTextHarga, editTextPotongan;
+public class EditBarangActivity extends AppCompatActivity {
+    private EditText editTextKdBarang, editTextNamaBarang, editTextHarga;
     private Switch switchStatus;
     private Button buttonSimpan;
-    private String membershipId; // ID membership yang akan diedit
-    private static final String URL_UPDATE_MEMBERSHIP = "https://kevindinata.my.id/SIALAN/update_membership.php"; // Ganti dengan URL server Anda
+    private String kdBarang; // Kode barang yang akan diedit
+    private static final String URL_UPDATE_BARANG = "https://kevindinata.my.id/SIALAN/update_barang.php"; // Ganti dengan URL server Anda
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_membership);
+        setContentView(R.layout.activity_edit_barang);
 
-        editTextIdMembership = findViewById(R.id.editTextIdMembership);
-        editTextNamaMembership = findViewById(R.id.editTextNamaMembership);
+        editTextKdBarang = findViewById(R.id.editTextKdBarang);
+        editTextNamaBarang = findViewById(R.id.editTextNamaBarang);
         editTextHarga = findViewById(R.id.editTextHarga);
-        editTextPotongan = findViewById(R.id.editTextPotongan);
         switchStatus = findViewById(R.id.switchStatus);
         buttonSimpan = findViewById(R.id.buttonSimpan);
 
         // Ambil data dari Intent
         Intent intent = getIntent();
-        membershipId = intent.getStringExtra("MEMBERSHIP_ID");
-        String nama = intent.getStringExtra("NAMA");
-        String harga = intent.getStringExtra("HARGA");
-        String potongan = intent.getStringExtra("POTONGAN");
+        kdBarang = intent.getStringExtra("KD_BARANG");
+        String nama = intent.getStringExtra("NAMA_BARANG");
+        String harga = intent.getStringExtra("HARGA_BARANG");
         String status = intent.getStringExtra("STATUS"); // Ambil status (1 atau 0)
 
         // Set data ke EditText
-        editTextIdMembership.setText(membershipId);
-        editTextIdMembership.setEnabled(false); // Membuat ID Membership tidak dapat diubah
-        editTextNamaMembership.setText(nama);
+        editTextKdBarang.setText(kdBarang);
+        editTextKdBarang.setEnabled(false); // Membuat Kode Barang tidak dapat diubah
+        editTextNamaBarang.setText(nama);
 
         // Menghapus simbol "Rp" dan hanya menampilkan angka
         if (harga != null) {
             harga = harga.replace("Rp. ", "").replace(".", "").trim(); // Menghapus "Rp" dan titik
         }
         editTextHarga.setText(harga); // Pastikan harga hanya angka
-        editTextPotongan.setText(potongan);
 
         // Set switch berdasarkan status
         switchStatus.setChecked("1".equals(status)); // Aktif jika status adalah "1"
 
-        buttonSimpan.setOnClickListener(v -> updateMembership());
+        buttonSimpan.setOnClickListener(v -> updateBarang());
     }
 
-    private void updateMembership() {
-        String namaMembership = editTextNamaMembership.getText().toString().trim();
+    private void updateBarang() {
+        String namaBarang = editTextNamaBarang.getText().toString().trim();
         String harga = editTextHarga.getText().toString().trim();
-        String potongan = editTextPotongan.getText().toString().trim();
         int status = switchStatus.isChecked() ? 1 : 0; // 1 untuk Aktif, 0 untuk Non-Aktif
 
         // Validasi input
-        if (namaMembership.isEmpty() || harga.isEmpty() || potongan.isEmpty()) {
+        if (namaBarang.isEmpty() || harga.isEmpty()) {
             Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -84,20 +79,19 @@ public class EditMembershipActivity extends AppCompatActivity {
         }
 
         // Kirim data ke server
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPDATE_MEMBERSHIP,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPDATE_BARANG,
                 response -> {
-                    Toast.makeText(EditMembershipActivity.this, "Membership berhasil diperbarui", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK); // Mengatur hasil untuk kembali ke MembershipActivity
+                    Toast.makeText(EditBarangActivity.this, "Barang berhasil diperbarui", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK); // Mengatur hasil untuk kembali ke BarangActivity
                     finish(); // Kembali ke activity sebelumnya
                 },
-                error -> Toast.makeText(EditMembershipActivity.this, "Gagal memperbarui membership", Toast.LENGTH_SHORT).show()) {
+                error -> Toast.makeText(EditBarangActivity.this, "Gagal memperbarui barang", Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id_membership", membershipId); // ID membership yang akan diperbarui
-                params.put("nama_membership", namaMembership);
-                params.put("harga_membership", harga);
-                params.put("potongan", potongan);
+                params.put("kd_barang", kdBarang); // Kode barang yang akan diperbarui
+                params.put("nama_barang", namaBarang);
+                params.put("harga_barang", harga);
                 params.put("status", String.valueOf(status)); // Kirim status sebagai string
                 return params;
             }

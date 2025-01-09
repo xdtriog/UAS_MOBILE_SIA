@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimary">#6200EE</color> <!-- Ganti dengan warna yang Anda inginkan -->
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#8E8E8E</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="darker_gray">#A9A9A9</color>
+    <color name="btn_green_side">#4FCF57</color>
+    <color name="dark_green">#2E7A32</color> <!-- Dark Green Hex Code -->
 </resources>

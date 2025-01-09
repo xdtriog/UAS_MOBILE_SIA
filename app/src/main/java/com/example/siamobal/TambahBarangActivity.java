@@ -46,7 +46,7 @@ public class TambahBarangActivity extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_BARANG,
                 response -> {
-                    Toast.makeText(TambahBarangActivity.this, response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahBarangActivity.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK); // Mengatur hasil sebagai OK
                     finish(); // Kembali ke activity sebelumnya
                 },

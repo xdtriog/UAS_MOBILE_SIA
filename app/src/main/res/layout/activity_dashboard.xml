@@ -1,121 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Logo"
+        android:src="@drawable/decor_nobg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Dashboard Admin"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
     <TextView
         android:id="@+id/textViewGreeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Halo, (NAMA)"
         android:textSize="18sp"
-        android:layout_below="@id/textViewTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="5"
-        android:layout_below="@id/textViewGreeting"
-        android:padding="8dp">
-
-        <Button
-            android:id="@+id/btnPointOfSale"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Point Of Sale"/>
-
-        <Button
-            android:id="@+id/btnBeliMembership"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Beli Membership"/>
-
-
-
-        <Button
-            android:id="@+id/btnPiutang"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Piutang"/>
-
-        <Button
-            android:id="@+id/btnJurnalUmum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Jurnal Umum"/>
-
-        <Button
-            android:id="@+id/btnBukuBesar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Buku Besar"/>
-
-        <Button
-            android:id="@+id/btnNeracaSaldo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Neraca Saldo"/>
-
-        <Button
-            android:id="@+id/btnKodeAkun"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Kode Akun"/>
-
-        <Button
-            android:id="@+id/btnMetodePembayaran"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Metode Pembayaran"/>
-
-        <Button
-            android:id="@+id/btnKaryawan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Karyawan"/>
-
-        <Button
-            android:id="@+id/btnCustomer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Customer"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="366dp"
+        android:layout_height="494dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGreeting">
 
         <Button
             android:id="@+id/btnMembership"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Membership"/>
+            android:layout_width="165dp"
+            android:layout_height="65dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/transparent_border"
+            android:text="Membership"
+            android:textColor="@color/dark_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnKodeAkun" />
+
+        <Button
+            android:id="@+id/btnKaryawan"
+            android:layout_width="165dp"
+            android:layout_height="65dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/transparent_border"
+            android:text="Karyawan"
+            android:textColor="@color/dark_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnMembership" />
+
+        <Button
+            android:id="@+id/btnNeracaSaldo"
+            android:layout_width="110dp"
+            android:layout_height="80dp"
+            android:layout_margin="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/transparent_border"
+            android:text="Neraca Saldo"
+            android:textColor="@color/dark_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPiutang" />
+
+        <Button
+            android:id="@+id/btnBukuBesar"
+            android:layout_width="110dp"
+            android:layout_height="80dp"
+            android:layout_margin="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/transparent_border"
+            android:text="Buku Besar"
+            android:textColor="@color/dark_green"
+            app:layout_constraintEnd_toStartOf="@+id/btnNeracaSaldo"
+            app:layout_constraintStart_toEndOf="@+id/btnJurnalUmum"
+            app:layout_constraintTop_toBottomOf="@+id/btnPiutang" />
+
+        <Button
+            android:id="@+id/btnJurnalUmum"
+            android:layout_width="110dp"
+            android:layout_height="80dp"
+            android:layout_margin="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/transparent_border"
+            android:text="Jurnal Umum"
+            android:textColor="@color/dark_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPiutang" />
+
+        <Button
+            android:id="@+id/btnPointOfSale"
+            android:layout_width="165dp"
+            android:layout_height="75dp"
+            android:layout_margin="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/transparent_border"
+            android:text="Point Of Sale"
+            android:textColor="@color/dark_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnBeliMembership"
+            android:layout_width="165dp"
+            android:layout_height="75dp"
+            android:layout_margin="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/transparent_border"
+            android:text="Beli Membership"
+            android:textColor="@color/dark_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnPiutang"
+            android:layout_width="360dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/transparent_border"
+            android:text="Piutang"
+            android:textColor="@color/dark_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPointOfSale" />
+
+        <Button
+            android:id="@+id/btnMetodePembayaran"
+            android:layout_width="165dp"
+            android:layout_height="65dp"
+            android:layout_margin="4dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/transparent_border"
+            android:text="Metode Pembayaran"
+            android:textColor="@color/dark_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNeracaSaldo" />
+
+        <Button
+            android:id="@+id/btnKodeAkun"
+            android:layout_width="165dp"
+            android:layout_height="65dp"
+            android:layout_margin="4dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/transparent_border"
+            android:text="Kode Akun"
+            android:textColor="@color/dark_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnJurnalUmum" />
+
+        <Button
+            android:id="@+id/btnCustomer"
+            android:layout_width="165dp"
+            android:layout_height="65dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/transparent_border"
+            android:text="Customer"
+            android:textColor="@color/dark_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBarang" />
 
         <Button
             android:id="@+id/btnBarang"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Barang"/>
-    </GridLayout>
-</RelativeLayout>
+            android:layout_width="165dp"
+            android:layout_height="65dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/transparent_border"
+            android:text="Barang"
+            android:textColor="@color/dark_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnMetodePembayaran" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

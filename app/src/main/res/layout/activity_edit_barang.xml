@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:text="Edit Barang"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewKdBarang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Kode Barang"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+    <EditText
+        android:id="@+id/editTextKdBarang"
+        android:background="@drawable/rounded_edittext"
+        android:layout_height="50sp"
+        android:paddingLeft="10sp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:focusable="false"
+        android:hint="Masukkan Kode Barang"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewKdBarang" />
+
+    <TextView
+        android:id="@+id/textViewNamaBarang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Nama Barang"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextKdBarang" />
+
+    <EditText
+        android:id="@+id/editTextNamaBarang"
+        android:paddingLeft="10sp"
+
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Masukkan Nama Barang"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNamaBarang" />
+
+    <TextView
+        android:id="@+id/textViewHarga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Harga"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNamaBarang" />
+
+    <EditText
+        android:id="@+id/editTextHarga"
+        android:layout_width="match_parent"
+
+        android:layout_height="50sp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Masukkan Harga"
+        android:inputType="numberDecimal"
+        android:paddingLeft="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHarga" />
+
+    <Switch
+        android:id="@+id/switchStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="4dp"
+        android:textOff="Non-Aktif"
+        android:textOn="Aktif"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStatus" />
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="16dp"
+        android:text="Status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHarga" />
+
+    <Button
+        android:id="@+id/buttonSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit dan Simpan"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@+id/switchStatus"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,12 +3,14 @@ package com.example.siamobal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,28 +26,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MembershipActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private MembershipAdapter adapter;
+    private TableLayout tableMembership; // Ganti RecyclerView dengan TableLayout
     private List<Membership> membershipList;
     private static final String URL_GET_MEMBERSHIPS = "https://kevindinata.my.id/SIALAN/get_memberships.php"; // Ganti dengan URL server Anda
     private static final int ADD_MEMBERSHIP_REQUEST_CODE = 1; // Kode permintaan untuk menambah membership
-    private static final int EDIT_MEMBERSHIP_REQUEST_CODE = 2; // Kode permintaan untuk edit membership
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_membership);
 
-        recyclerView = findViewById(R.id.recyclerViewMembership);
+        tableMembership = findViewById(R.id.tableMembership);
         Button btnTambahMembership = findViewById(R.id.btnTambahMembership);
 
         // Inisialisasi daftar membership
         membershipList = new ArrayList<>();
-
-        // Setup RecyclerView
-        adapter = new MembershipAdapter(membershipList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
 
         // Ambil data membership dari server
         fetchMemberships();
@@ -64,9 +59,6 @@ public class MembershipActivity extends AppCompatActivity {
         if (requestCode == ADD_MEMBERSHIP_REQUEST_CODE && resultCode == RESULT_OK) {
             // Jika kembali dari TambahMembershipActivity, refresh data
             fetchMemberships();
-        } else if (requestCode == EDIT_MEMBERSHIP_REQUEST_CODE && resultCode == RESULT_OK) {
-            // Jika kembali dari EditMembershipActivity, refresh data
-            fetchMemberships();
         }
     }
 
@@ -79,22 +71,35 @@ public class MembershipActivity extends AppCompatActivity {
                         try {
                             // Log respons JSON
                             Log.d("MembershipActivity", "Response: " + response.toString());
+                            tableMembership.removeAllViews(); // Clear existing rows
+
+                            // Buat header table
+                            TableRow headerRow = new TableRow(MembershipActivity.this);
+                            String[] header = {"Nama Membership", "Harga", "Potongan (%)", "Status", "Action"};
+                            for (String title : header) {
+                                TextView textView = new TextView(MembershipActivity.this);
+                                textView.setText(title);
+                                textView.setTextSize(16);
+                                textView.setPadding(8, 8, 8, 8);
+                                headerRow.addView(textView);
+                            }
+                            tableMembership.addView(headerRow); // Tambahkan header ke tabel
 
                             for (int i = 0; i < response.length(); i++) {
                                 // Ambil data sesuai dengan kunci yang ada
                                 String id = response.getJSONObject(i).getString("id"); // Ambil ID
                                 String nama = response.getJSONObject(i).getString("nama");
                                 String harga = response.getJSONObject(i).getString("harga");
-                                String potongan = response.getJSONObject(i).getString("potongan");
-                                int status = response.getJSONObject(i).getInt("status");
+                                String potongan = response.getJSONObject(i).getString("potongan"); // Ambil potongan
+                                String status = response.getJSONObject(i).getString("status");
 
                                 // Menentukan status
-                                String statusText = (status == 1) ? "Aktif" : "Non-Aktif";
+                                String statusText = status.equals("1") ? "Aktif" : "Tidak Aktif";
 
                                 // Tambahkan ke daftar membership
                                 membershipList.add(new Membership(id, nama, "Rp. " + harga, statusText, potongan));
+                                addButtonRow(nama, "Rp. " + harga, potongan, statusText, id); // Menambahkan baris data ke tabel
                             }
-                            adapter.notifyDataSetChanged(); // Notifikasi adapter untuk memperbarui tampilan
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(MembershipActivity.this, "Error parsing data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -110,5 +115,48 @@ public class MembershipActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
+    }
+
+    private void addButtonRow(String nama, String harga, String potongan, String status, String id) {
+        TableRow row = new TableRow(this);
+
+        TextView tvNama = new TextView(this);
+        TextView tvHarga = new TextView(this);
+        TextView tvPotongan = new TextView(this); // TextView untuk Potongan
+        TextView tvStatus = new TextView(this);
+        Button btnEdit = new Button(this);
+
+        tvNama.setText(nama);
+        tvHarga.setText(harga);
+        tvPotongan.setText(potongan + "%"); // Tambahkan format persentase
+        tvStatus.setText(status);
+        btnEdit.setText("Edit");
+
+        // Set action button (Edit)
+        btnEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(MembershipActivity.this, EditMembershipActivity.class);
+            intent.putExtra("MEMBERSHIP_ID", id); // Kirim ID ke EditMembershipActivity
+            intent.putExtra("NAMA", nama);
+            intent.putExtra("HARGA", harga);
+            intent.putExtra("POTONGAN", potongan);
+            intent.putExtra("STATUS", status);// Kirim potongan ke EditMembershipActivity
+            startActivityForResult(intent, ADD_MEMBERSHIP_REQUEST_CODE); // Kembali untuk memuat ulang
+        });
+
+        // Set layout parameters untuk membatasi lebar kolom
+        TableRow.LayoutParams params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+        tvNama.setLayoutParams(params);
+        tvHarga.setLayoutParams(params);
+        tvPotongan.setLayoutParams(params);
+        tvStatus.setLayoutParams(params);
+        btnEdit.setLayoutParams(params);
+
+        row.addView(tvNama);
+        row.addView(tvHarga);
+        row.addView(tvPotongan); // Menambahkan kolom potongan ke baris
+        row.addView(tvStatus);
+        row.addView(btnEdit);
+
+        tableMembership.addView(row); // Tambahkan baris ke tabel
     }
 }
