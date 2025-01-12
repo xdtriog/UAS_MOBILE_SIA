@@ -26,8 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="NIK CUSTOMER"
         android:textSize="16sp"
+        android:text="NIK CUSTOMER"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
 
@@ -36,10 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_marginTop="8dp"
+        android:paddingLeft="10sp"
         android:background="@drawable/rounded_edittext"
         android:focusable="false"
         android:hint="NIK CUSTOMER"
-        android:paddingLeft="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,9 +49,9 @@
         android:id="@+id/textViewNamaCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
         android:layout_marginTop="16dp"
         android:text="Nama Customer"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_nik_customer" />
 

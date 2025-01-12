@@ -1,47 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="144dp"
         android:text="Tambah Kode Akun"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textViewKode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:textSize="16sp"
         android:text="Kode Akun"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"/>
 
     <EditText
         android:id="@+id/editTextKodeAkun"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_edittext"
+        android:paddingLeft="10sp"
         android:inputType="number"
-        android:hint="Masukkan Kode Akun"/>
+        android:hint="Masukkan Kode Akun"
+        app:layout_constraintTop_toBottomOf="@id/textViewKode"/>
 
     <TextView
+        android:id="@+id/textViewNamaAkun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nama Kode Akun"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/editTextKodeAkun"/>
 
     <EditText
         android:id="@+id/editTextNamaAkun"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Masukkan Nama Kode Akun"/>
+        android:layout_height="50sp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_edittext"
+        android:paddingLeft="10sp"
+        android:hint="Masukkan Nama Kode Akun"
+        app:layout_constraintTop_toBottomOf="@id/textViewNamaAkun"/>
 
     <Button
         android:id="@+id/buttonSimpan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_green"
         android:text="Tambah dan Simpan"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/editTextNamaAkun"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

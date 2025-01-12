@@ -1,85 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:text="Edit Membership"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="center"
-        android:paddingBottom="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textViewIdMembership"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID Membership" />
+        android:layout_marginTop="28dp"
+        android:textSize="16sp"
+        android:text="ID Membership"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/editTextIdMembership"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="10sp"
+        android:background="@drawable/rounded_edittext"
         android:hint="Masukkan ID Membership"
         android:inputType="text"
-        android:focusable="false" /> <!-- Membuat ID Membership tidak dapat diubah -->
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@id/textViewIdMembership"/>
 
     <TextView
+        android:id="@+id/textViewNamaMembership"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nama Membership" />
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        android:text="Nama Membership"
+        app:layout_constraintTop_toBottomOf="@id/editTextIdMembership"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/editTextNamaMembership"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="10sp"
+        android:background="@drawable/rounded_edittext"
         android:hint="Masukkan Nama Membership"
-        android:inputType="text" />
+        app:layout_constraintTop_toBottomOf="@id/textViewNamaMembership"/>
 
     <TextView
+        android:id="@+id/textViewHarga"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Harga" />
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        android:text="Harga"
+        app:layout_constraintTop_toBottomOf="@id/editTextNamaMembership"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/editTextHarga"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="10sp"
+        android:background="@drawable/rounded_edittext"
         android:hint="Masukkan Harga"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/textViewHarga"/>
 
     <TextView
+        android:id="@+id/textViewPotongan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Potongan (%)" />
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        android:text="Potongan (%)"
+        app:layout_constraintTop_toBottomOf="@id/editTextHarga"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/editTextPotongan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="10sp"
+        android:background="@drawable/rounded_edittext"
         android:hint="Masukkan Potongan"
-        android:inputType="number" />
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/textViewPotongan"/>
 
     <TextView
+        android:id="@+id/textViewStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Status" />
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="20dp"
+        android:text="Status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextPotongan" />
 
     <Switch
         android:id="@+id/switchStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textOff="Non-Aktif"
-        android:textOn="Aktif" />
+        android:textOn="Aktif"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        tools:layout_editor_absoluteX="167dp" />
 
     <Button
         android:id="@+id/buttonSimpan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_green"
         android:text="Edit dan Simpan"
-        android:layout_marginTop="16dp" />
-
-</LinearLayout>
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/switchStatus"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

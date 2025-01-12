@@ -1,47 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Neraca Saldo"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="center"
-        android:paddingBottom="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerBulanTahun"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        tools:layout_editor_absoluteX="16dp" />
 
     <Button
         android:id="@+id/btnFilter"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Filter"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/dark_green"
+        android:text="Tambah Metode Pembayaran"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerBulanTahun"
+        tools:layout_editor_absoluteX="16dp" />
 
-    <!-- TextView untuk menampilkan Total Debit dan Kredit -->
     <TextView
         android:id="@+id/textViewTotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Total: (Debit: Rp. 0, Kredit: Rp. 0)"
         android:textSize="18sp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnFilter"/>
 
     <TableLayout
         android:id="@+id/tableBukuBesar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="0,1,2,3">
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:stretchColumns="0,1,2,3"
+        app:layout_constraintTop_toBottomOf="@id/textViewTotal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TableRow>
             <TextView
@@ -80,4 +94,4 @@
         <!-- Data rows will be added programmatically -->
     </TableLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

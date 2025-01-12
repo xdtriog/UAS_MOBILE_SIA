@@ -59,4 +59,28 @@
     android:layout_below="@id/etPassword"
     android:layout_marginTop="16dp"/>
 
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLogin"
+        android:layout_alignStart="@+id/btnLogin"
+        android:layout_alignEnd="@+id/btnLogin"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="75dp"
+        android:text="Email : andi.setiawan@example.com" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLogin"
+        android:layout_alignStart="@+id/textView7"
+        android:layout_alignEnd="@+id/textView7"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="-2dp"
+        android:text="Password : password123" />
+
 </RelativeLayout>
