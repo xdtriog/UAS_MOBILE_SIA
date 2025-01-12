@@ -29,6 +29,10 @@ public class NeracaSaldoActivity extends AppCompatActivity {
     private Button btnFilter;
     private TableLayout tableBukuBesar;
 
+    // Variabel untuk menyimpan total
+    private long totalDebit = 0;
+    private long totalKredit = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +71,10 @@ public class NeracaSaldoActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
+                            totalDebit = 0; // Reset total debit
+                            totalKredit = 0; // Reset total kredit
                             populateTable(jsonArray);
+                            updateTotalText(); // Memperbarui tampilan total setelah mempopulasi tabel
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -89,8 +96,12 @@ public class NeracaSaldoActivity extends AppCompatActivity {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             int kodeAkun = jsonObject.getInt("KODE_AKUN");
             String keterangan = jsonObject.getString("NAMA_AKUN");
-            long debitValue = jsonObject.getLong("DEBIT"); // Menerima nilai debit dari API
-            long kreditValue = jsonObject.getLong("KREDIT"); // Menerima nilai kredit dari API
+            long debitValue = jsonObject.getLong("DEBIT");
+            long kreditValue = jsonObject.getLong("KREDIT");
+
+            // Update total debit and kredit
+            totalDebit += debitValue;
+            totalKredit += kreditValue;
 
             TableRow tableRow = new TableRow(this);
             TextView tvKodeAkun = new TextView(this);
@@ -110,6 +121,12 @@ public class NeracaSaldoActivity extends AppCompatActivity {
 
             tableBukuBesar.addView(tableRow);
         }
+    }
+
+    private void updateTotalText() {
+        TextView textViewTotal = findViewById(R.id.textViewTotal);
+        textViewTotal.setText(String.format("Total: (Debit: %s, Kredit: %s)",
+                formatCurrency(totalDebit), formatCurrency(totalKredit)));
     }
 
     private String formatCurrency(long amount) {

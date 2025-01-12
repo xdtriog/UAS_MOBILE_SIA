@@ -28,6 +28,15 @@
         android:layout_gravity="center"
         android:layout_marginTop="8dp" />
 
+    <!-- TextView untuk menampilkan Total Debit dan Kredit -->
+    <TextView
+        android:id="@+id/textViewTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total: (Debit: Rp. 0, Kredit: Rp. 0)"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp" />
+
     <TableLayout
         android:id="@+id/tableBukuBesar"
         android:layout_width="match_parent"

@@ -8,14 +8,19 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class BukuBesarActivity extends AppCompatActivity {
@@ -23,6 +28,10 @@ public class BukuBesarActivity extends AppCompatActivity {
     private Spinner spinnerBulanTahun, spinnerKodeAkun;
     private Button btnFilter;
     private TableLayout tableBukuBesar;
+
+    // Variabel untuk menyimpan total
+    private float totalDebit = 0;
+    private float totalKredit = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,17 @@ public class BukuBesarActivity extends AppCompatActivity {
         btnFilter = findViewById(R.id.btn_filter);
         tableBukuBesar = findViewById(R.id.table_buku_besar);
 
-        // Populate Spinner with Month-Year Options
+        // Setup spinner adapter
+        setupSpinner();
+
+        btnFilter.setOnClickListener(v -> {
+            String selectedDate = spinnerBulanTahun.getSelectedItem().toString();
+            String selectedKodeAkun = spinnerKodeAkun.getSelectedItem().toString().split(" - ")[0]; // Ambil kode akun
+            getBukuBesarData(selectedDate, selectedKodeAkun);
+        });
+    }
+
+    private void setupSpinner() {
         ArrayList<String> monthYearList = new ArrayList<>();
         monthYearList.add("01 - 2025");
         monthYearList.add("02 - 2025");
@@ -46,16 +65,10 @@ public class BukuBesarActivity extends AppCompatActivity {
 
         // Load Kode Akun Options from Server
         loadKodeAkun();
-
-        btnFilter.setOnClickListener(v -> {
-            String selectedDate = spinnerBulanTahun.getSelectedItem().toString();
-            String selectedKodeAkun = spinnerKodeAkun.getSelectedItem().toString().split(" - ")[0]; // Ambil kode akun
-            getBukuBesarData(selectedDate, selectedKodeAkun);
-        });
     }
 
     private void loadKodeAkun() {
-        String url = "https://kevindinata.my.id/SIALAN/get_kode_akun.php";  // Ganti dengan URL yang sesuai
+        String url = "https://kevindinata.my.id/SIALAN/get_kode_akun.php"; // Ganti dengan URL yang sesuai
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
@@ -74,9 +87,11 @@ public class BukuBesarActivity extends AppCompatActivity {
                         spinnerKodeAkun.setAdapter(adapterAkun);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(BukuBesarActivity.this, "Gagal memuat kode akun", Toast.LENGTH_SHORT).show();
                     }
                 }, error -> {
             // Handle error
+            Toast.makeText(BukuBesarActivity.this, "Gagal memuat kode akun", Toast.LENGTH_SHORT).show();
         });
 
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
@@ -89,12 +104,17 @@ public class BukuBesarActivity extends AppCompatActivity {
                 response -> {
                     try {
                         JSONArray jsonArray = new JSONArray(response);
+                        totalDebit = 0; // Reset total debit
+                        totalKredit = 0; // Reset total kredit
                         populateTable(jsonArray);
+                        updateTotalText(); // Memperbarui tampilan total setelah mempopulasi tabel
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(BukuBesarActivity.this, "Gagal memuat data buku besar", Toast.LENGTH_SHORT).show();
                     }
                 }, error -> {
             // Handle error
+            Toast.makeText(BukuBesarActivity.this, "Gagal memuat data buku besar", Toast.LENGTH_SHORT).show();
         });
 
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
@@ -122,8 +142,15 @@ public class BukuBesarActivity extends AppCompatActivity {
             String kreditValue = jsonObject.getString("KREDIT").trim();
             String kredit2Value = jsonObject.optString("KREDIT2", "0").trim();
 
-            tvDebit.setText(debitValue.equals("0") ? debit2Value : debitValue);
-            tvKredit.setText(kreditValue.equals("0") ? kredit2Value : kreditValue);
+            float debit = debitValue.equals("0") ? Float.parseFloat(debit2Value) : Float.parseFloat(debitValue);
+            float kredit = kreditValue.equals("0") ? Float.parseFloat(kredit2Value) : Float.parseFloat(kreditValue);
+
+            tvDebit.setText("Rp. " + String.format("%.2f", debit));
+            tvKredit.setText("Rp. " + String.format("%.2f", kredit));
+
+            // Update total
+            totalDebit += debit;
+            totalKredit += kredit;
 
             tableRow.addView(tvTanggal, new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
             tableRow.addView(tvKeterangan, new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f));
@@ -133,5 +160,15 @@ public class BukuBesarActivity extends AppCompatActivity {
 
             tableBukuBesar.addView(tableRow);
         }
+    }
+
+    private void updateTotalText() {
+        TextView textViewTotal = findViewById(R.id.textViewTotal);
+        textViewTotal.setText(String.format("Total: (Debit: %s, Kredit: %s)",
+                formatCurrency(totalDebit), formatCurrency(totalKredit)));
+    }
+
+    private String formatCurrency(float amount) {
+        return String.format("Rp. %,d", (long) amount); // Format ke "Rp. X.XXX"
     }
 }
